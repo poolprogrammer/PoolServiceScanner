@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.13.35931.197 d17.13
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "PoolServiceScanner", "PoolServiceScanner\PoolServiceScanner.pyproj", "{AD843A28-473E-4D6F-B1E4-6F8A0CA343E1}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{AD843A28-473E-4D6F-B1E4-6F8A0CA343E1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AD843A28-473E-4D6F-B1E4-6F8A0CA343E1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {8DA93F75-9590-4A80-97BD-1DA3C3D60605}
+	EndGlobalSection
+EndGlobal
