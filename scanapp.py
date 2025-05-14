@@ -1,9 +1,13 @@
 import streamlit as st
 import pandas as pd
 from datetime import datetime
-import xlsxwriter
 import io
 import re
+import os
+os.system('pip install xlsxwriter')
+
+import xlsxwriter
+
 
 # ---------- CHECK FUNCTIONS ----------
 
