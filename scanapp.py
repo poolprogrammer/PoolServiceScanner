@@ -1,13 +1,14 @@
-
 import streamlit as st
 import pandas as pd
 from datetime import datetime
 import io
 import re
 import os
-os.system('pip install xlsxwriter')
+os.system('pip install xlsxwriter matplotlib seaborn')
 
 import xlsxwriter
+import matplotlib.pyplot as plt
+import seaborn as sns
 
 # ---------- CHECK FUNCTIONS ----------
 
@@ -238,39 +239,32 @@ if uploaded_file:
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
     )
 
-# Image generation
-import matplotlib.pyplot as plt
-import seaborn as sns
+    # Generate image of the top 25 rows of the output table
+    df_display = df_output.head(25)
+    plt.figure(figsize=(20, len(df_display) * 0.5))
+    sns.set(style="whitegrid")
 
-# Optional: limit to first N rows to keep image size reasonable
-df_display = df_output.head(25)
+    table = plt.table(cellText=df_display.values,
+                      colLabels=df_display.columns,
+                      cellLoc='center',
+                      loc='center')
+    table.auto_set_font_size(False)
+    table.set_fontsize(8)
+    table.scale(1.2, 1.2)
+    plt.axis('off')
 
-# Set up plot style
-plt.figure(figsize=(20, len(df_display) * 0.5))
-sns.set(style="whitegrid")
+    img_buffer = io.BytesIO()
+    plt.savefig(img_buffer, format='png', bbox_inches='tight')
+    plt.close()
+    img_buffer.seek(0)
 
-# Create a visual table
-table = plt.table(cellText=df_display.values,
-                  colLabels=df_display.columns,
-                  cellLoc='center',
-                  loc='center')
-
-table.auto_set_font_size(False)
-table.set_fontsize(8)
-table.scale(1.2, 1.2)
-plt.axis('off')
-
-# Save to buffer
-img_buffer = io.BytesIO()
-plt.savefig(img_buffer, format='png', bbox_inches='tight')
-plt.close()
-img_buffer.seek(0)
-
-# Display and download
-st.image(img_buffer, caption="Preview of Analysis Table", use_column_width=True)
-st.download_button(
-    label="📸 Download Table Image",
-    data=img_buffer,
-    file_name="service_report_table.png",
-    mime="image/png"
+    st.image(img_buffer, caption="Preview of Analysis Table", use_column_width=True)
+    st.download_button(
+        label="📸 Download Table Image",
+        data=img_buffer,
+        file_name="service_report_table.png",
+        mime="image/png"
+    ),
+    file_name=f"Service_Report_Analysis_{datetime.now().strftime('%Y-%m-%d_%H-%M')}.xlsx",
+    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
 )
