@@ -1,3 +1,4 @@
+
 import streamlit as st
 import pandas as pd
 from datetime import datetime
@@ -7,7 +8,6 @@ import os
 os.system('pip install xlsxwriter')
 
 import xlsxwriter
-
 
 # ---------- CHECK FUNCTIONS ----------
 
@@ -206,11 +206,34 @@ if uploaded_file:
         df_output.to_excel(writer, sheet_name='Analysis Results', index=False)
         df.to_excel(writer, sheet_name='Original Data', index=False)
 
-    output.seek(0)  # 🔄 Reset pointer to the beginning
+        workbook = writer.book
+        worksheet = writer.sheets['Analysis Results']
+        wrap_format = workbook.add_format({'text_wrap': True})
+        center_format = workbook.add_format({'align': 'center', 'valign': 'vcenter'})
+        red_format = workbook.add_format({'bg_color': '#FFC7CE', 'align': 'center', 'valign': 'vcenter', 'text_wrap': True})
+
+        worksheet.set_column('A:F', 20, wrap_format)
+        for col_idx in range(2, len(df_output.columns)):
+            width = 45 if df_output.columns[col_idx] in ['Action Items', 'Manager - Tech - Duration'] else 12
+            worksheet.set_column(col_idx, col_idx, width, center_format)
+
+        highlight_columns = [
+            'Items added to inventory?', 'Note Followup Criteria', 'Chlorine Added',
+            'CYA Range', 'Phosphate Range Untreated', 'Marked Ready', 'Filter Pressure',
+            'System Primed', 'Water Sample', 'Add Notes for Next Visit', 'Quote needed?'
+        ]
+
+        for col in highlight_columns:
+            if col in df_output.columns:
+                idx = df_output.columns.get_loc(col)
+                for i, val in enumerate(df_output[col], start=1):
+                    if isinstance(val, str) and val.strip() in ['Fail', 'Yes', 'Low Pressure', 'High Pressure', 'Sample to Test']:
+                        worksheet.write(i, idx, val, red_format)
+
+    output.seek(0)
     st.download_button(
-        label="📥 Download Excel Report",
+        label="\ud83d\udcc5 Download Excel Report",
         data=output,
         file_name=f"Service_Report_Analysis_{datetime.now().strftime('%Y-%m-%d_%H-%M')}.xlsx",
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-)
-
+    )
