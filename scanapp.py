@@ -230,11 +230,14 @@ if uploaded_file:
                     if isinstance(val, str) and val.strip() in ['Fail', 'Yes', 'Low Pressure', 'High Pressure', 'Sample to Test']:
                         worksheet.write(i, idx, val, red_format)
 
-        output.seek(0)  # 🔄 Always reset pointer
-        st.download_button(
-            label="📥 Download Excel Report",
-            data=output.getvalue(),  # ✅ Pass the actual bytes
-            file_name=f"Service_Report_Analysis_{datetime.now().strftime('%Y-%m-%d_%H-%M')}.xlsx",
-            mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-)
+    output.seek(0)
+    output.seek(0)
+st.download_button(
+    label="📥 Download Excel Report",
+    data=output.getvalue(),
+    file_name=f"Service_Report_Analysis_{datetime.now().strftime('%Y-%m-%d_%H-%M')}.xlsx",
+    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+).strftime('%Y-%m-%d_%H-%M')}.xlsx",
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
 
