@@ -264,7 +264,4 @@ if uploaded_file:
         data=img_buffer,
         file_name="service_report_table.png",
         mime="image/png"
-    ),
-    file_name=f"Service_Report_Analysis_{datetime.now().strftime('%Y-%m-%d_%H-%M')}.xlsx",
-    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-)
+    )
