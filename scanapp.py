@@ -242,16 +242,29 @@ if uploaded_file:
     # Generate image of the top 25 rows of the output table
     df_display = df_output.head(25)
     plt.figure(figsize=(20, len(df_display) * 0.5))
-    sns.set(style="whitegrid")
+    ax = plt.gca()
+    ax.axis('off')
 
+    # Create table
     table = plt.table(cellText=df_display.values,
                       colLabels=df_display.columns,
                       cellLoc='center',
                       loc='center')
+
     table.auto_set_font_size(False)
     table.set_fontsize(8)
     table.scale(1.2, 1.2)
-    plt.axis('off')
+
+    # Highlight "Fail" and other key values
+    for (row, col), cell in table.get_celld().items():
+        if row == 0:
+            cell.set_fontsize(9)
+            cell.set_text_props(weight='bold')
+            cell.set_facecolor('#CCCCCC')
+        else:
+            val = df_display.iloc[row - 1, col]
+            if isinstance(val, str) and val.strip() in ['Fail', 'Yes', 'Low Pressure', 'High Pressure', 'Sample to Test']:
+                cell.set_facecolor('#FFC7CE')
 
     img_buffer = io.BytesIO()
     plt.savefig(img_buffer, format='png', bbox_inches='tight')
