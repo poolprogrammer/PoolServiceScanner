@@ -2,6 +2,7 @@ import streamlit as st
 import pandas as pd
 from datetime import datetime
 import re
+import xlsxwriter
 
 # ---------- DEFINE CHECK FUNCTIONS (same as your original) ----------
 # Copy all your check functions here exactly as-is
