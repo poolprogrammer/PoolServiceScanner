@@ -231,9 +231,10 @@ if uploaded_file:
                         worksheet.write(i, idx, val, red_format)
 
     output.seek(0)
-st.download_button(
-    label="📥 Download Excel Report",
-    data=output.getvalue(),
-    file_name=f"Service_Report_Analysis_{datetime.now().strftime('%Y-%m-%d_%H-%M')}.xlsx",
-    mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-)
+    st.download_button(
+        label="📥 Download Excel Report",
+        data=output.getvalue(),
+        file_name=f"Service_Report_Analysis_{datetime.now().strftime('%Y-%m-%d_%H-%M')}.xlsx",
+        mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
+    )
+
