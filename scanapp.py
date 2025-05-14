@@ -206,9 +206,11 @@ if uploaded_file:
         df_output.to_excel(writer, sheet_name='Analysis Results', index=False)
         df.to_excel(writer, sheet_name='Original Data', index=False)
 
+    output.seek(0)  # 🔄 Reset pointer to the beginning
     st.download_button(
-        label="\ud83d\udcc5 Download Excel Report",
-        data=output.getvalue(),
-        file_name=f'Service_Report_Analysis_{datetime.today().strftime("%m-%d")}_Final.xlsx',
+        label="📥 Download Excel Report",
+        data=output,
+        file_name='Service_Report_Analysis.xlsx',
         mime='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet'
-    )
+)
+
