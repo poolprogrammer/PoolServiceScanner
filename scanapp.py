@@ -240,7 +240,7 @@ if uploaded_file:
     )
 
     # Generate image of the top 25 rows of the output table
-    df_display = df_output.head(25)
+    df_display = df_output.copy()
     plt.figure(figsize=(20, len(df_display) * 0.5))
     ax = plt.gca()
     ax.axis('off')
